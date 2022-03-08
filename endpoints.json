@@ -1,0 +1,138 @@
+{
+  "GET /api": {
+    "description": "Responds with a JSON representation of all the available endpoints of the API"
+  },
+  "GET /api/categories": {
+    "description": "Responds with an array of category objects, each with a slug and a description",
+    "queries": [],
+    "exampleResponse": {
+      "categories": [
+        {
+          "slug": "strategy",
+          "description": "Strategy-focused board games that prioritise limited-randomness"
+        },
+        {
+          "slug": "hidden-roles",
+          "description": "One or more players around the table have a secret, and the rest of you need to figure out who! Players attempt to uncover each other's hidden role"
+        }
+      ]
+    }
+  },
+  "GET /api/reviews": {
+    "description": "Responds with an array of review objects",
+    "queries": ["category", "sort_by", "order"],
+    "exampleResponse": {
+      "reviews": [
+        {
+          "review_id": 13,
+          "owner": "tickle122",
+          "title": "Kerplunk; Don't lose your marbles",
+          "category": "dexterity",
+          "review_img_url": "https://images.pexels.com/photos/278888/pexels-photo-278888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+          "created_at": "2021-01-25T00:00:00.000Z",
+          "votes": 9  },
+        {
+          "review_id": 8,
+          "owner": "grumpy19",
+          "title": "Scythe; you're gonna need a bigger table!",
+          "category": "engine-building",
+          "review_img_url": "https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg",
+          "created_at": "2021-01-22T00:00:00.000Z",
+          "votes": 100
+        }
+      ]
+    }
+  },
+  "GET /api/reviews/:review_id": {
+    "description": "Responds with a review object",
+    "exampleResponse": {
+      "review": {
+        "owner": "happyamy2016",
+        "title": "One Night Ultimate Werewolf",
+        "review_id": 4,
+        "review_body": "We couldn't find the werewolf!",
+        "designer": "Akihisa Okui",
+        "review_img_url": "https://images.pexels.com/photos/5350049/pexels-photo-5350049.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "category": "hidden-roles",
+        "created_at": "2021-01-18T00:00:00.000Z",
+        "votes": 5,
+        "comment_count": "4"
+      }
+    }
+  },
+  "GET /api/users": {
+    "description": "Responds with an array of user objects, each with a username property",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "tiggles"
+        },
+        {
+          "username": "jeremyjames"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "Responds with a user object",
+    "exampleResponse": { "user": {
+      "username": "philippaclaire9",
+      "name": "philippa",
+      "avatar_url":
+        "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4"
+    }}
+  },
+  "PATCH /api/reviews/:review_id": {
+    "description": "Request body accepts an object to increase or decrease votes, responds with updated review object",
+    "exampleRequest": {"inc_votes": 2},
+    "exampleResponse": {
+      "review": {
+        "owner": "happyamy2016",
+        "title": "One Night Ultimate Werewolf",
+        "review_id": 4,
+        "review_body": "We couldn't find the werewolf!",
+        "designer": "Akihisa Okui",
+        "review_img_url": "https://images.pexels.com/photos/5350049/pexels-photo-5350049.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "category": "hidden-roles",
+        "created_at": "2021-01-18T00:00:00.000Z",
+        "votes": 6,
+        "comment_count": "4"
+      }
+    }
+  },
+  "PATCH /api/comments/:comment_id": {
+    "description": "Request body accepts an object to increase or decrease votes, responds with updated comment object",
+    "exampleRequest": {"inc_votes": 1},
+    "exampleResponse": {
+      "review": {
+        "comment_id": 7,
+        "author": "mallionaire",
+        "review_id": 2,
+        "votes": 1,
+        "created_at": "2022-01-18T00:00:00.000Z",
+        "body": "Great fun to be had by all"
+      }
+    }
+  },
+  "POST /api/reviews/:review_id/comments": {
+    "description": "Request body accepts object with username and body, responds with posted comment",
+    "exampleRequest": {
+      "username": "mallionaire",
+      "body": "Great fun to be had by all"
+    },
+    "exampleResponse": {
+      "review": {
+        "comment_id": 7,
+        "author": "mallionaire",
+        "review_id": 2,
+        "votes": 0,
+        "created_at": "2022-01-18T00:00:00.000Z",
+        "body": "Great fun to be had by all"
+      }
+    }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "Deletes the given comment by comment_id, responds with status 204 and no content"
+  }
+}
